@@ -1,0 +1,47 @@
+*.iml
+target
+/.project
+/.classpath
+/.settings
+*.launch
+*application-local.yml
+.idea
+*liquibase-diffChangeLog.xml
+*liquibase-outputChangeLog.xml
+
+# Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode,jenv,direnv
+# Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,jenv,direnv
+
+### direnv ###
+.direnv
+.envrc
+
+### JEnv ###
+# JEnv local Java version configuration file
+.java-version
+
+# Used by previous versions of JEnv
+.jenv-version
+
+### VisualStudioCode ###
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
+
+# Local History for Visual Studio Code
+.history/
+
+# Built Visual Studio Code Extensions
+*.vsix
+
+### VisualStudioCode Patch ###
+# Ignore all local history of files
+.history
+.ionide
+
+# End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,jenv,direnv
+
+.DS_Store

@@ -1,0 +1,11 @@
+#
+# Main changelog url
+#
+# It helps to reference separate changelog files related to ticket-numbers.
+# E.g.: JIRA-23.changelog.yaml
+#
+
+databaseChangeLog:
+
+  - include:
+      file: db/changelog/changes/db.changelog-1.xml

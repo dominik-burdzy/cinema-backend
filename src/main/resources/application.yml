@@ -1,0 +1,32 @@
+serviceDescription:
+  id: cinema-backend-${git.commit.id}
+  name: cinema-backend
+
+spring:
+  application:
+    name: cinema-backend
+  metrics:
+    prometheus:
+      enabled: true
+  jackson:
+    serialization:
+      write_dates_as_timestamps: false
+      write_durations_as_timestamps: false
+
+management:
+  info:
+    java.enabled: true
+  endpoints.web:
+    exposure.include: info,health,prometheus
+    cors:
+      allowed-origins: '*'
+      allowed-methods: GET
+      allowed-headers: '*'
+  metrics.web.server.auto-time-requests: true
+
+logging:
+  level:
+    org.hibernate.SQL: ERROR
+    pl.dombur: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} %-5level [%thread] %X{traceId} %X{userId} %logger{0} - %msg%n"

@@ -1,0 +1,25 @@
+# EditorConfig file for ktlint-maven-plugin
+
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+indent_style = space
+indent_size = 4
+trim_trailing_whitespace = true
+
+[*.{kt,kts}]
+# Use spaces for indentation and set indent size for Kotlin files
+indent_style = space
+indent_size = 4
+
+# Enforce max line length for Kotlin files (optional, adjust as needed)
+max_line_length = 120
+
+# Ensure final newline at end of files
+insert_final_newline = true
+
+# Trim trailing whitespace in Kotlin files
+trim_trailing_whitespace = true

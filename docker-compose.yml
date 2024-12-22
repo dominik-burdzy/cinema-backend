@@ -1,0 +1,10 @@
+version: '3'
+services:
+  db:
+    image: postgres:16.3-alpine
+    environment:
+      POSTGRES_PASSWORD: cinema
+      POSTGRES_USER: cinema
+      POSTGRES_DB: cinema
+    ports:
+      - "5422:5432"

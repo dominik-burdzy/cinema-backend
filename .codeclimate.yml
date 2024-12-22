@@ -1,0 +1,25 @@
+---
+version: "2"
+plugins:
+  fixme:
+    enabled: true
+exclude_patterns:
+- config/
+- db/
+- dist/
+- target/
+- .mvn/
+- .m2/
+- doc/
+- features/
+- "**/node_modules/"
+- script/
+- "**/spec/"
+- "**/test/"
+- "**/tests/"
+- Tests/
+- "**/vendor/"
+- "**/*_test.go"
+- "**/*.d.ts"
+- "**/*.min.js"
+- "**/*.min.css"

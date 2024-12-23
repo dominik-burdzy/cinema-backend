@@ -10,6 +10,4 @@ interface BaseRepository<T : BaseEntity> :
     JpaRepository<T, UUID>,
     JpaSpecificationExecutor<T> {
     fun findByReferenceId(referenceId: UUID): T?
-
-    fun findByReferenceIdIn(referenceIds: Set<UUID>): List<T>
 }

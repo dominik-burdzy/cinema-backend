@@ -15,7 +15,7 @@ import org.springframework.scheduling.annotation.EnableScheduling
 @EnableRetry
 @EnableScheduling
 @SpringBootApplication(
-    scanBasePackages = ["pl.dombur.**"],
+    scanBasePackages = ["pl.dombur.cinema.**"],
     exclude = [
         AuditAutoConfiguration::class,
         SessionAutoConfiguration::class,

@@ -6,9 +6,186 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-    <changeSet id="1-xxx" author="dburdzy">
+    <changeSet id="create-revinfo-table" author="dburdzy">
 
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="revinfo"/>
+            </not>
+        </preConditions>
 
+        <createTable tableName="revinfo">
+            <column name="rev" type="SERIAL" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="revinfo__pk"/>
+            </column>
+            <column name="revtstmp" type="BIGINT"/>
+        </createTable>
+
+        <rollback>
+            <dropTable tableName="revinfo"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="create-shedlock-table" author="dburdzy">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="shedlock"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="shedlock">
+            <column name="name" type="VARCHAR(64)">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="shedlock__pk"/>
+            </column>
+
+            <column name="lock_until" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="locked_at" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="locked_by" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <rollback>
+            <dropTable tableName="shedlock"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="create-movie-table" author="dburdzy">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="movie"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="movie">
+            <column name="reference_id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="movie__pk"/>
+            </column>
+            <column name="imdb_id" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="title" type="VARCHAR(1024)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="modified_at" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addUniqueConstraint tableName="movie" columnNames="imdb_id" constraintName="movie__imdb_id__unique"/>
+
+        <rollback>
+            <dropTable tableName="movie"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="insert-fast-and-furious-movies" author="dburdzy">
+        <preConditions>
+            <sqlCheck expectedResult="0">SELECT COUNT(*) FROM movie</sqlCheck>
+        </preConditions>
+
+        <sql>
+            CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+        </sql>
+
+        <insert schemaName="public" tableName="movie">
+            <column name="reference_id" valueComputed="uuid_generate_v4()"/>
+            <column name="imdb_id" value="tt0232500"/>
+            <column name="title" value="The Fast and the Furious"/>
+            <column name="created_at" valueComputed="now()"/>
+            <column name="modified_at" valueComputed="now()"/>
+        </insert>
+
+        <insert schemaName="public" tableName="movie">
+            <column name="reference_id" valueComputed="uuid_generate_v4()"/>
+            <column name="imdb_id" value="tt0322259"/>
+            <column name="title" value="2 Fast 2 Furious"/>
+            <column name="created_at" valueComputed="now()"/>
+            <column name="modified_at" valueComputed="now()"/>
+        </insert>
+
+        <insert schemaName="public" tableName="movie">
+            <column name="reference_id" valueComputed="uuid_generate_v4()"/>
+            <column name="imdb_id" value="tt0463985"/>
+            <column name="title" value="The Fast and the Furious: Tokyo Drift"/>
+            <column name="created_at" valueComputed="now()"/>
+            <column name="modified_at" valueComputed="now()"/>
+        </insert>
+
+        <insert schemaName="public" tableName="movie">
+            <column name="reference_id" valueComputed="uuid_generate_v4()"/>
+            <column name="imdb_id" value="tt1013752"/>
+            <column name="title" value="Fast &amp; Furious"/>
+            <column name="created_at" valueComputed="now()"/>
+            <column name="modified_at" valueComputed="now()"/>
+        </insert>
+
+        <insert schemaName="public" tableName="movie">
+            <column name="reference_id" valueComputed="uuid_generate_v4()"/>
+            <column name="imdb_id" value="tt1596343"/>
+            <column name="title" value="Fast Five"/>
+            <column name="created_at" valueComputed="now()"/>
+            <column name="modified_at" valueComputed="now()"/>
+        </insert>
+
+        <insert schemaName="public" tableName="movie">
+            <column name="reference_id" valueComputed="uuid_generate_v4()"/>
+            <column name="imdb_id" value="tt1905041"/>
+            <column name="title" value="Fast &amp; Furious 6"/>
+            <column name="created_at" valueComputed="now()"/>
+            <column name="modified_at" valueComputed="now()"/>
+        </insert>
+
+        <insert schemaName="public" tableName="movie">
+            <column name="reference_id" valueComputed="uuid_generate_v4()"/>
+            <column name="imdb_id" value="tt2820852"/>
+            <column name="title" value="Furious 7"/>
+            <column name="created_at" valueComputed="now()"/>
+            <column name="modified_at" valueComputed="now()"/>
+        </insert>
+
+        <insert schemaName="public" tableName="movie">
+            <column name="reference_id" valueComputed="uuid_generate_v4()"/>
+            <column name="imdb_id" value="tt4630562"/>
+            <column name="title" value="The Fate of the Furious"/>
+            <column name="created_at" valueComputed="now()"/>
+            <column name="modified_at" valueComputed="now()"/>
+        </insert>
+
+        <insert schemaName="public" tableName="movie">
+            <column name="reference_id" valueComputed="uuid_generate_v4()"/>
+            <column name="imdb_id" value="tt5433138"/>
+            <column name="title" value="F9: The Fast Saga"/>
+            <column name="created_at" valueComputed="now()"/>
+            <column name="modified_at" valueComputed="now()"/>
+        </insert>
+
+        <rollback>
+            <delete tableName="movie">
+                <where>
+                    imdb_id IN (
+                        'tt0232500',
+                        'tt0322259',
+                        'tt0463985',
+                        'tt1013752',
+                        'tt1596343',
+                        'tt1905041',
+                        'tt2820852',
+                        'tt4630562',
+                        'tt5433138'
+                    )
+                </where>
+            </delete>
+        </rollback>
     </changeSet>
 
 </databaseChangeLog>

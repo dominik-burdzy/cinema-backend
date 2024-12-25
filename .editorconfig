@@ -10,7 +10,7 @@ indent_style = space
 indent_size = 2
 trim_trailing_whitespace = true
 
-[*.{kt,kt,xml}]
+[*.{kt,kts,xml}]
 # Use spaces for indentation and set indent size for Kotlin files
 indent_style = space
 indent_size = 4

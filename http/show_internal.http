@@ -1,0 +1,54 @@
+@movieReferenceId = 993db3c4-0ae5-4a21-8f02-57485ae640e7
+@showReferenceId = 67602d15-bbd4-42f2-b16e-aea7e9ebbba7
+
+### POST create the new show details
+POST {{serviceUrl}}/api/v1/internal/shows
+Content-Type: application/json
+
+{
+  "movieReferenceId": {{movieReferenceId}},
+  "price": 30.0,
+  "type": "_3D",
+  "schedule": {
+    "2024-12-25": [
+      "10:00",
+      "12:00",
+      "14:00"
+    ],
+    "2024-12-26": [
+      "20:15",
+      "21:00",
+      "23:45"
+    ],
+    "2024-12-27": [
+      "14:30",
+      "16:00",
+      "18:00"
+    ]
+  }
+}
+
+### PUT update the show details
+PUT {{serviceUrl}}/api/v1/internal/shows/{{showReferenceId}}
+Content-Type: application/json
+
+{
+  "price": 35.0,
+  "schedule": {
+    "2024-12-25": [
+      "10:00",
+      "12:00",
+      "14:00"
+    ],
+    "2024-12-26": [
+      "19:15",
+      "20:00",
+      "23:45"
+    ],
+    "2024-12-27": [
+      "14:30",
+      "16:00",
+      "19:00"
+    ]
+  }
+}

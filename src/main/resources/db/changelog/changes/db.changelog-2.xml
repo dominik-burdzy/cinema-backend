@@ -1,0 +1,115 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="create-show-table" author="dburdzy">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="show"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="show">
+            <column name="reference_id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="show__pk"/>
+            </column>
+            <column name="movie_reference_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="price" type="DECIMAL(10, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="type" type="VARCHAR(16)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="modified_at" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createIndex tableName="show" indexName="show__movie_reference_id__idx">
+            <column name="movie_reference_id"/>
+        </createIndex>
+
+        <addUniqueConstraint
+            columnNames="movie_reference_id, type"
+            constraintName="show__movie_reference_id_type__uq" tableName="show"/>
+
+        <rollback>
+            <dropTable tableName="show"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="create-show_schedule_day-table" author="dburdzy">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="show_schedule_day"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="show_schedule_day">
+            <column name="reference_id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="show_schedule_day__pk"/>
+            </column>
+            <column name="show_reference_id" type="UUID">
+                <constraints nullable="false"
+                             referencedTableName="show"
+                             referencedColumnNames="reference_id"
+                             foreignKeyName="show_schedule_day_reference_id__fk" />
+            </column>
+            <column name="date" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="modified_at" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createIndex tableName="show_schedule_day" indexName="show_schedule_day__show_reference_id__idx">
+            <column name="show_reference_id"/>
+        </createIndex>
+
+        <rollback>
+            <dropTable tableName="show_schedule_day"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="create-show_schedule_time-table" author="dburdzy">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="show_schedule_time"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="show_schedule_time">
+            <column name="show_schedule_day_reference_id" type="UUID">
+                <constraints nullable="false"
+                             referencedTableName="show_schedule_day"
+                             referencedColumnNames="reference_id"
+                             foreignKeyName="show_schedule_day_time_reference_id__fk" />
+            </column>
+            <column name="time" type="TIME WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createIndex tableName="show_schedule_time" indexName="show_schedule_time__show_schedule_day_reference_id__idx">
+            <column name="show_schedule_day_reference_id"/>
+        </createIndex>
+
+        <rollback>
+            <dropTable tableName="show_schedule_time"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

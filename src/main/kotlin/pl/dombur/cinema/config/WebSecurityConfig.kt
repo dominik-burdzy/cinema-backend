@@ -23,7 +23,12 @@ class WebSecurityConfig {
             arrayOf(
                 "/",
                 "/actuator/**",
-                "/public/**",
+                "/api/v1/public/**",
+            )
+
+        val INTERNAL_URLS =
+            arrayOf(
+                "/api/v1/internal/**",
             )
     }
 
@@ -42,6 +47,8 @@ class WebSecurityConfig {
                     .requestMatchers(HttpMethod.OPTIONS)
                     .permitAll()
                     .requestMatchers(*PUBLIC_URLS)
+                    .permitAll()
+                    .requestMatchers(*INTERNAL_URLS)
                     .permitAll()
                     .anyRequest()
                     .authenticated()

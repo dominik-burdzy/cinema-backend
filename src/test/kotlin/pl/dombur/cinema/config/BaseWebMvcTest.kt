@@ -23,9 +23,9 @@ abstract class BaseWebMvcTest {
     @Autowired
     protected lateinit var mapper: ObjectMapper
 
-    internal inline fun <reified T> ResultActions.andParsedResponse(): T =
-        andReturn().response.contentAsString.let { mapper.readValue(it) }
-
     internal fun <T> MockHttpServletRequestBuilder.withBody(body: T): MockHttpServletRequestBuilder =
         this.content(mapper.writeValueAsString(body)).contentType(MediaType.APPLICATION_JSON)
+
+    internal inline fun <reified T> ResultActions.andParsedResponse(): T =
+        andReturn().response.contentAsString.let { mapper.readValue(it) }
 }

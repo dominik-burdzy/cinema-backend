@@ -26,7 +26,7 @@ class ShowInternalController(
 ) {
     companion object {
         const val PATH = "/api/v1/internal/shows"
-        const val SPECIFIC_MOVIE_PATH = "/{referenceId}"
+        const val SPECIFIC_SHOW_PATH = "/{referenceId}"
     }
 
     @Operation(
@@ -72,11 +72,11 @@ class ShowInternalController(
             ),
             ApiResponse(
                 responseCode = "404",
-                description = "On movie not found",
+                description = "On show not found",
             ),
         ],
     )
-    @PutMapping(SPECIFIC_MOVIE_PATH)
+    @PutMapping(SPECIFIC_SHOW_PATH)
     fun update(
         @PathVariable referenceId: UUID,
         @RequestBody @Valid form: UpdateShowForm,

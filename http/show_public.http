@@ -1,0 +1,9 @@
+@showReferenceId = xxx
+
+### GET list of shows
+GET {{serviceUrl}}/api/v1/public/shows?type=_3D&showDate=2024-12-25
+Accept: application/json
+
+### GET given show
+GET {{serviceUrl}}/api/v1/public/shows/{{showReferenceId}}
+Accept: application/json

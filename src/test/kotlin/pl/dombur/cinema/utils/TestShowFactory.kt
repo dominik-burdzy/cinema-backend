@@ -1,5 +1,6 @@
 package pl.dombur.cinema.utils
 
+import pl.dombur.cinema.domain.show.FindShowCmd
 import pl.dombur.cinema.domain.show.ShowModel
 import pl.dombur.cinema.domain.show.ShowType
 import pl.dombur.cinema.domain.show.UpdateShowCmd
@@ -16,11 +17,12 @@ object TestShowFactory {
     fun showEntity(
         referenceId: UUID = UUID.randomUUID(),
         movieReferenceId: UUID = UUID.randomUUID(),
+        type: ShowType = ShowType._2D,
     ) = ShowEntity(
         referenceId = referenceId,
         movieReferenceId = movieReferenceId,
         price = BigDecimal(30),
-        type = ShowType._2D,
+        type = type,
     ).apply {
         showScheduleDays =
             mutableSetOf(
@@ -63,6 +65,13 @@ object TestShowFactory {
                     LocalDate.now().plusDays(1) to listOf(LocalTime.of(18, 0), LocalTime.of(21, 30)),
                     LocalDate.now().plusDays(2) to listOf(LocalTime.of(16, 0), LocalTime.of(19, 30)),
                 ),
+        )
+
+    fun findShowCmd() =
+        FindShowCmd(
+            movieReferenceIds = setOf(UUID.randomUUID()),
+            type = ShowType._2D,
+            showDate = LocalDate.now(),
         )
 
     fun createShowForm() =

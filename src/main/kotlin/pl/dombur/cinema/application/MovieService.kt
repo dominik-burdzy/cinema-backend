@@ -6,6 +6,8 @@ import org.springframework.transaction.annotation.Transactional
 import pl.dombur.cinema.domain.movie.MovieDataProvider
 import pl.dombur.cinema.domain.movie.MovieDetailedModel
 import pl.dombur.cinema.domain.movie.MovieModel
+import pl.dombur.cinema.domain.movie.RateMovieCmd
+import pl.dombur.cinema.infrastructure.persistence.MovieRatingEntity
 import pl.dombur.cinema.infrastructure.repository.MovieRepository
 import java.util.UUID
 
@@ -33,4 +35,20 @@ class MovieService(
         movieRepository
             .findAll()
             .map { MovieModel.fromEntity(it) }
+
+    @Transactional
+    fun rate(cmd: RateMovieCmd) {
+        val movie =
+            movieRepository.findByReferenceId(cmd.referenceId)
+                ?: throw EntityNotFoundException("Movie with referenceId: ${cmd.referenceId} not found")
+
+        val rating =
+            MovieRatingEntity(
+                rating = cmd.rating,
+                comment = cmd.comment,
+            )
+        movie.addRating(rating)
+
+        movieRepository.save(movie)
+    }
 }

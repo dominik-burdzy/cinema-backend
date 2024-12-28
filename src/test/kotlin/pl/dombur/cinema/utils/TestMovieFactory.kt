@@ -2,8 +2,11 @@ package pl.dombur.cinema.utils
 
 import pl.dombur.cinema.domain.movie.MovieDetailedModel
 import pl.dombur.cinema.domain.movie.MovieModel
+import pl.dombur.cinema.domain.movie.RateMovieCmd
 import pl.dombur.cinema.infrastructure.external.omdb.MovieData
 import pl.dombur.cinema.infrastructure.persistence.MovieEntity
+import pl.dombur.cinema.infrastructure.persistence.MovieRatingEntity
+import pl.dombur.cinema.interfaces.web.dto.RateMovieForm
 import java.time.LocalDate
 import java.util.UUID
 
@@ -12,11 +15,14 @@ object TestMovieFactory {
         referenceId: UUID = UUID.randomUUID(),
         imdbId: String = "testId",
         title: String = "Test Movie",
+        ratings: MutableList<MovieRatingEntity> = mutableListOf(),
     ) = MovieEntity(
         referenceId = referenceId,
         imdbId = imdbId,
         title = title,
-    )
+    ).apply {
+        ratings.forEach { addRating(it) }
+    }
 
     fun movieModel(
         referenceId: UUID = UUID.randomUUID(),
@@ -70,5 +76,33 @@ object TestMovieFactory {
         actors = actors,
         country = country,
         imdbRating = imdbRating,
+    )
+
+    fun movieRatingEntity(
+        referenceId: UUID = UUID.randomUUID(),
+        rating: Int = 5,
+        comment: String = "Test comment",
+    ) = MovieRatingEntity(
+        referenceId = referenceId,
+        rating = rating,
+        comment = comment,
+    )
+
+    fun rateMovieCmd(
+        referenceId: UUID = UUID.randomUUID(),
+        rating: Int = 5,
+        comment: String = "Test comment",
+    ) = RateMovieCmd(
+        referenceId = referenceId,
+        rating = rating,
+        comment = comment,
+    )
+
+    fun rateMovieForm(
+        rating: Int = 5,
+        comment: String = "Test comment",
+    ) = RateMovieForm(
+        rating = rating,
+        comment = comment,
     )
 }

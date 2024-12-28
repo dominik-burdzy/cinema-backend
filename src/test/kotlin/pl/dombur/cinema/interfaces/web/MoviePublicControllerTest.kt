@@ -3,6 +3,8 @@ package pl.dombur.cinema.interfaces.web
 import jakarta.persistence.EntityNotFoundException
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.mockito.kotlin.any
+import org.mockito.kotlin.doNothing
 import org.mockito.kotlin.eq
 import org.mockito.kotlin.given
 import org.springframework.beans.factory.annotation.Autowired
@@ -86,5 +88,62 @@ class MoviePublicControllerTest : BaseWebMvcTest() {
                 MockMvcRequestBuilders
                     .get("/api/v1/public/movies/$referenceId"),
             ).andExpect(MockMvcResultMatchers.status().isNotFound)
+    }
+
+    @Test
+    fun `GIVEN a movie WHEN rate THEN should add rating successfully`() {
+        // given
+        val referenceId = UUID.randomUUID()
+        val form =
+            TestMovieFactory.rateMovieForm(
+                rating = 6,
+                comment = "Great movie! But could be better...",
+            )
+
+        doNothing().`when`(movieService).rate(any())
+
+        // when / then
+        mockMvc
+            .perform(
+                MockMvcRequestBuilders
+                    .post("/api/v1/public/movies/$referenceId/ratings")
+                    .withBody(form),
+            ).andExpect(MockMvcResultMatchers.status().isOk)
+    }
+
+    @Test
+    fun `GIVEN no movie WHEN rate THEN should return 404`() {
+        // given
+        val referenceId = UUID.randomUUID()
+        val form = TestMovieFactory.rateMovieForm()
+
+        given(movieService.rate(any())).willThrow(EntityNotFoundException("not found"))
+
+        // when / then
+        mockMvc
+            .perform(
+                MockMvcRequestBuilders
+                    .post("/api/v1/public/movies/$referenceId/ratings")
+                    .withBody(form),
+            ).andExpect(MockMvcResultMatchers.status().isNotFound)
+    }
+
+    @Test
+    fun `GIVEN invalid form WHEN rate THEN should return 400`() {
+        // given
+        val referenceId = UUID.randomUUID()
+        val form =
+            TestMovieFactory.rateMovieForm(
+                rating = 11,
+                comment = "AMAZING!!!",
+            )
+
+        // when / then
+        mockMvc
+            .perform(
+                MockMvcRequestBuilders
+                    .post("/api/v1/public/movies/$referenceId/ratings")
+                    .withBody(form),
+            ).andExpect(MockMvcResultMatchers.status().isBadRequest)
     }
 }

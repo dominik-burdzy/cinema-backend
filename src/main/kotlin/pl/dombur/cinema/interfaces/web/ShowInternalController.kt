@@ -37,7 +37,7 @@ class ShowInternalController(
                 description = "On success",
             ),
             ApiResponse(
-                responseCode = "401",
+                responseCode = "400",
                 description = "On invalid input",
             ),
             ApiResponse(
@@ -67,7 +67,7 @@ class ShowInternalController(
                 description = "On success",
             ),
             ApiResponse(
-                responseCode = "401",
+                responseCode = "400",
                 description = "On invalid input",
             ),
             ApiResponse(

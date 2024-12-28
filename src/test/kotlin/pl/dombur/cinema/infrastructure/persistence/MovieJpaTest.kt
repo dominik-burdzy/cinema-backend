@@ -21,7 +21,23 @@ class MovieJpaTest : BaseJpaTest() {
     @Test
     fun `should save movie successfully`() {
         // given
-        val entity = TestMovieFactory.movieEntity()
+        val ratings =
+            mutableListOf(
+                MovieRatingEntity(
+                    rating = 5,
+                    comment = "Test comment",
+                ),
+                MovieRatingEntity(
+                    rating = 4,
+                    comment = "Test comment 2",
+                ),
+                MovieRatingEntity(
+                    rating = 3,
+                    comment = "Test comment 3",
+                ),
+            )
+
+        val entity = TestMovieFactory.movieEntity(ratings = ratings)
 
         // when
         val result = movieRepository.save(entity)
@@ -33,6 +49,8 @@ class MovieJpaTest : BaseJpaTest() {
         assertThat(result.title).isEqualTo(entity.title)
         assertThat(result.createdAt).isNotNull
         assertThat(result.modifiedAt).isNotNull
+        assertThat(result.ratings).hasSize(3)
+        assertThat(result.ratings).extracting("rating").containsExactly(5, 4, 3)
     }
 
     @Test

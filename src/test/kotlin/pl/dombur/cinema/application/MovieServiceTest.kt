@@ -82,4 +82,40 @@ class MovieServiceTest {
             result,
         ).extracting("referenceId").containsExactlyInAnyOrderElementsOf(entities.map { it.referenceId })
     }
+
+    @Test
+    fun `GIVEN a movie WHEN rate THEN should add rating to it`() {
+        // given
+        val entity = TestMovieFactory.movieEntity()
+        val cmd = TestMovieFactory.rateMovieCmd(referenceId = entity.referenceId)
+
+        given(movieRepository.findByReferenceId(entity.referenceId)).willReturn(entity)
+        given(movieRepository.save(entity)).willAnswer { it.arguments.first() }
+
+        // when
+        movieService.rate(cmd)
+
+        // then
+        assertThat(entity.ratings).hasSize(1)
+        assertThat(entity.ratings.first().rating).isEqualTo(cmd.rating)
+        assertThat(entity.ratings.first().comment).isEqualTo(cmd.comment)
+    }
+
+    @Test
+    fun `GIVEN no movie WHEN rate THEN should throw exception if not found`() {
+        // given
+        val referenceId = UUID.randomUUID()
+        val cmd = TestMovieFactory.rateMovieCmd(referenceId = referenceId)
+
+        given(movieRepository.findByReferenceId(referenceId)).willReturn(null)
+
+        // when
+        val exception =
+            assertThrows<EntityNotFoundException> {
+                movieService.rate(cmd)
+            }
+
+        // then
+        assertThat(exception.message).isEqualTo("Movie with referenceId: $referenceId not found")
+    }
 }

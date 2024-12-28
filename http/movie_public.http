@@ -1,0 +1,9 @@
+@movieReferenceId = 993db3c4-0ae5-4a21-8f02-57485ae640e7
+
+### GET list of movies
+GET {{serviceUrl}}/api/v1/public/movies
+Accept: application/json
+
+### GET given movie
+GET {{serviceUrl}}/api/v1/public/movies/{{movieReferenceId}}
+Accept: application/json

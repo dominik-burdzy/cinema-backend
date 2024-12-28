@@ -24,6 +24,11 @@ management:
       allowed-headers: '*'
   metrics.web.server.auto-time-requests: true
 
+client:
+  omdb:
+    url: "http://www.omdbapi.com"
+    apiKey: # placeholder for API key
+
 logging:
   level:
     org.hibernate.SQL: ERROR

@@ -5,3 +5,7 @@ spring:
   liquibase:
     parameters:
       db-owner: test
+
+client:
+  omdb:
+    api-key: testApiKey

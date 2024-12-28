@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5422/cinema
+    username: cinema
+    password: cinema
+  liquibase:
+    enabled: true
+    parameters:
+      db-owner: cinema
+
+client:
+  omdb:
+    apiKey: "xxx"

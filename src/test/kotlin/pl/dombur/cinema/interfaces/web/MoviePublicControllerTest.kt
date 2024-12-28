@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import pl.dombur.cinema.application.MovieService
 import pl.dombur.cinema.config.BaseWebMvcTest
+import pl.dombur.cinema.domain.movie.MovieMapper
 import pl.dombur.cinema.interfaces.web.dto.MovieDetailedResult
 import pl.dombur.cinema.interfaces.web.dto.MovieSummaryResult
 import pl.dombur.cinema.utils.TestMovieFactory
@@ -72,7 +73,7 @@ class MoviePublicControllerTest : BaseWebMvcTest() {
                 .andParsedResponse<MovieDetailedResult>()
 
         // then
-        assertThat(result).isEqualTo(movie.toResult())
+        assertThat(result).isEqualTo(MovieMapper.toDetailedResult(movie))
     }
 
     @Test

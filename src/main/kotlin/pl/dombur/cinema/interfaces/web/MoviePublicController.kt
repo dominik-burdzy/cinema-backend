@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import pl.dombur.cinema.application.MovieService
+import pl.dombur.cinema.domain.movie.MovieMapper
 import pl.dombur.cinema.domain.movie.RateMovieCmd
 import pl.dombur.cinema.interfaces.web.dto.MovieDetailedResult
 import pl.dombur.cinema.interfaces.web.dto.MovieSummaryResult
@@ -37,7 +38,7 @@ class MoviePublicController(
         ],
     )
     @GetMapping
-    fun list(): List<MovieSummaryResult> = movieService.findAll().map { it.toResult() }
+    fun list(): List<MovieSummaryResult> = movieService.findAll().map { MovieMapper.toSummaryResult(it) }
 
     @Operation(
         summary = "Get the specific movie",
@@ -55,7 +56,7 @@ class MoviePublicController(
     @GetMapping(SPECIFIC_MOVIE_PATH)
     fun get(
         @PathVariable referenceId: UUID,
-    ): MovieDetailedResult = movieService.findOne(referenceId).toResult()
+    ): MovieDetailedResult = movieService.findOne(referenceId).let { MovieMapper.toDetailedResult(it) }
 
     @Operation(
         summary = "Rate the specific movie",

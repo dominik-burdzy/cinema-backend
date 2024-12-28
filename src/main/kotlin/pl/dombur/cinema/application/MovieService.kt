@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import pl.dombur.cinema.domain.movie.MovieDataProvider
 import pl.dombur.cinema.domain.movie.MovieDetailedModel
+import pl.dombur.cinema.domain.movie.MovieMapper
 import pl.dombur.cinema.domain.movie.MovieModel
 import pl.dombur.cinema.domain.movie.RateMovieCmd
 import pl.dombur.cinema.infrastructure.persistence.MovieRatingEntity
@@ -24,7 +25,7 @@ class MovieService(
 
         val data = movieDataProvider.getMovie(entity.imdbId)
 
-        return MovieDetailedModel.from(
+        return MovieMapper.toDetailedModel(
             entity = entity,
             data = data,
         )

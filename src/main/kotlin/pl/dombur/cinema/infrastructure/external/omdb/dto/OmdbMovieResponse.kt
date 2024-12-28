@@ -24,7 +24,8 @@ data class OmdbMovieResponse(
     @JsonProperty("Country")
     val country: String,
     @JsonProperty("imdbRating")
-    val imdbRating: String,
+    @JsonFormat(shape = JsonFormat.Shape.NUMBER_FLOAT)
+    val imdbRating: Double,
 ) {
     fun toMovieData(): MovieData =
         MovieData(

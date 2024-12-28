@@ -42,7 +42,8 @@ object TestMovieFactory {
         director: String = "Test Director",
         actors: String = "Test Actor",
         country: String = "Test Country",
-        imdbRating: String = "8.0",
+        imdbRating: Double = 8.0,
+        cinemaRating: Double? = 5.0,
     ) = MovieDetailedModel(
         referenceId = referenceId,
         title = title,
@@ -54,6 +55,7 @@ object TestMovieFactory {
         actors = actors,
         country = country,
         imdbRating = imdbRating,
+        cinemaRating = cinemaRating,
     )
 
     fun movieData(
@@ -65,7 +67,7 @@ object TestMovieFactory {
         director: String = "Test Director",
         actors: String = "Test Actor",
         country: String = "Test Country",
-        imdbRating: String = "8.0",
+        imdbRating: Double = 8.0,
     ) = MovieData(
         title = title,
         description = description,
@@ -76,16 +78,6 @@ object TestMovieFactory {
         actors = actors,
         country = country,
         imdbRating = imdbRating,
-    )
-
-    fun movieRatingEntity(
-        referenceId: UUID = UUID.randomUUID(),
-        rating: Int = 5,
-        comment: String = "Test comment",
-    ) = MovieRatingEntity(
-        referenceId = referenceId,
-        rating = rating,
-        comment = comment,
     )
 
     fun rateMovieCmd(

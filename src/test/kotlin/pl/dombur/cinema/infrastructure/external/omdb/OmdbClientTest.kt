@@ -61,7 +61,7 @@ class OmdbClientTest {
         assertThat(result.director).isEqualTo("Rob Cohen")
         assertThat(result.actors).isEqualTo("Paul Walker, Vin Diesel, Michelle Rodriguez, Jordana Brewster")
         assertThat(result.country).isEqualTo("USA, Germany")
-        assertThat(result.imdbRating).isEqualTo("6.8")
+        assertThat(result.imdbRating).isEqualTo(6.8)
     }
 
     @Test

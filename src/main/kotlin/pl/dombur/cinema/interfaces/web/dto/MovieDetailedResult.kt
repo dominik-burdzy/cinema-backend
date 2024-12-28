@@ -22,5 +22,7 @@ data class MovieDetailedResult(
     @Schema(description = "Country where the movie was made")
     val country: String,
     @Schema(description = "IMDB rating of the movie")
-    val imdbRating: String,
+    val imdbRating: Double,
+    @Schema(description = "Cinema rating of the movie")
+    val cinemaRating: Double?,
 )

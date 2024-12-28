@@ -11,5 +11,5 @@ data class MovieData(
     val director: String,
     val actors: String,
     val country: String,
-    val imdbRating: String,
+    val imdbRating: Double,
 )

@@ -1,4 +1,4 @@
-@movieReferenceId = xxx
+@movieReferenceId = 719b33ab-dd58-40e3-9f58-cf475c102275
 
 ### GET list of movies
 GET {{serviceUrl}}/api/v1/public/movies
@@ -7,3 +7,12 @@ Accept: application/json
 ### GET given movie
 GET {{serviceUrl}}/api/v1/public/movies/{{movieReferenceId}}
 Accept: application/json
+
+### POST new movie rating
+POST {{serviceUrl}}/api/v1/public/movies/{{movieReferenceId}}/ratings
+Content-Type: application/json
+
+{
+    "rating": 9,
+    "comment": "Great movie!"
+}

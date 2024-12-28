@@ -5,14 +5,15 @@ import pl.dombur.cinema.infrastructure.persistence.MovieEntity
 import pl.dombur.cinema.infrastructure.persistence.MovieRatingEntity
 import pl.dombur.cinema.interfaces.web.dto.MovieDetailedResult
 import pl.dombur.cinema.interfaces.web.dto.MovieSummaryResult
+import java.math.RoundingMode
 
 object MovieMapper {
     fun toDetailedResult(model: MovieDetailedModel) =
         MovieDetailedResult(
-            referenceId = model.referenceId.toString(),
+            referenceId = model.referenceId,
             title = model.title,
             description = model.description,
-            releaseDate = model.releaseDate.toString(),
+            releaseDate = model.releaseDate,
             runtime = model.runtime,
             genre = model.genre,
             director = model.director,
@@ -33,7 +34,7 @@ object MovieMapper {
         data: MovieData,
     ) = MovieDetailedModel(
         referenceId = entity.referenceId,
-        title = entity.title,
+        title = data.title,
         description = data.description,
         releaseDate = data.releaseDate,
         runtime = data.runtime,
@@ -50,4 +51,7 @@ object MovieMapper {
             .takeIf { it.isNotEmpty() }
             ?.map { it.rating }
             ?.average()
+            ?.round()
+
+    private fun Double.round() = this.toBigDecimal().setScale(1, RoundingMode.HALF_UP).toDouble()
 }

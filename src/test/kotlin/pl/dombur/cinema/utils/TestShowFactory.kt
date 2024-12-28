@@ -74,27 +74,32 @@ object TestShowFactory {
             showDate = LocalDate.now(),
         )
 
-    fun createShowForm() =
-        CreateShowForm(
-            movieReferenceId = UUID.randomUUID(),
-            price = BigDecimal(80),
-            type = ShowType._4DX,
-            schedule =
-                mapOf(
-                    LocalDate.now() to listOf(LocalTime.of(11, 30), LocalTime.of(13, 0), LocalTime.of(20, 0)),
-                    LocalDate.now().plusDays(1) to listOf(LocalTime.of(17, 0), LocalTime.of(21, 30)),
-                    LocalDate.now().plusDays(2) to listOf(LocalTime.of(15, 0), LocalTime.of(16, 30)),
-                ),
-        )
+    fun createShowForm(
+        movieReferenceId: UUID = UUID.randomUUID(),
+        price: BigDecimal = BigDecimal(30),
+        type: ShowType = ShowType._2D,
+        schedule: Map<LocalDate, List<LocalTime>> =
+            mapOf(
+                LocalDate.now() to listOf(LocalTime.of(10, 30), LocalTime.of(12, 0), LocalTime.of(15, 0)),
+                LocalDate.now().plusDays(1) to listOf(LocalTime.of(18, 0), LocalTime.of(21, 30)),
+            ),
+    ) = CreateShowForm(
+        movieReferenceId = movieReferenceId,
+        price = price,
+        type = type,
+        schedule = schedule,
+    )
 
-    fun updateShowForm() =
-        UpdateShowForm(
-            price = BigDecimal(80),
-            schedule =
-                mapOf(
-                    LocalDate.now() to listOf(LocalTime.of(11, 30), LocalTime.of(13, 0), LocalTime.of(20, 0)),
-                    LocalDate.now().plusDays(1) to listOf(LocalTime.of(17, 0), LocalTime.of(21, 30)),
-                    LocalDate.now().plusDays(2) to listOf(LocalTime.of(15, 0), LocalTime.of(16, 30)),
-                ),
-        )
+    fun updateShowForm(
+        price: BigDecimal = BigDecimal(80),
+        schedule: Map<LocalDate, List<LocalTime>> =
+            mapOf(
+                LocalDate.now() to listOf(LocalTime.of(11, 30), LocalTime.of(13, 0), LocalTime.of(20, 0)),
+                LocalDate.now().plusDays(1) to listOf(LocalTime.of(17, 0), LocalTime.of(21, 30)),
+                LocalDate.now().plusDays(2) to listOf(LocalTime.of(15, 0), LocalTime.of(16, 30)),
+            ),
+    ) = UpdateShowForm(
+        price = price,
+        schedule = schedule,
+    )
 }

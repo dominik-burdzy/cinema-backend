@@ -1,16 +1,18 @@
 package pl.dombur.cinema.interfaces.web.dto
 
 import io.swagger.v3.oas.annotations.media.Schema
+import java.time.LocalDate
+import java.util.UUID
 
 data class MovieDetailedResult(
     @Schema(description = "Reference ID of the movie")
-    val referenceId: String,
+    val referenceId: UUID,
     @Schema(description = "Title of the movie")
     val title: String,
     @Schema(description = "Description of the movie")
     val description: String,
     @Schema(description = "Release date of the movie")
-    val releaseDate: String,
+    val releaseDate: LocalDate,
     @Schema(description = "Runtime of the movie")
     val runtime: String,
     @Schema(description = "Genre of the movie")

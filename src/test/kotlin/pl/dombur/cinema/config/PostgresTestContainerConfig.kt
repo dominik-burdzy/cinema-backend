@@ -23,9 +23,7 @@ open class PostgresTestContainerConfig {
     }
 
     init {
-        postgreDBContainer
-            .withReuse(true)
-            .start()
+        postgreDBContainer.start()
         url = postgreDBContainer.jdbcUrl
         username = postgreDBContainer.username
         password = postgreDBContainer.password

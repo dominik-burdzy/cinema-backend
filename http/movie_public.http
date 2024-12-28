@@ -1,4 +1,4 @@
-@movieReferenceId = 993db3c4-0ae5-4a21-8f02-57485ae640e7
+@movieReferenceId = xxx
 
 ### GET list of movies
 GET {{serviceUrl}}/api/v1/public/movies

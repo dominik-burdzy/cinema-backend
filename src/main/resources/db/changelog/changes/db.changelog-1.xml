@@ -6,56 +6,6 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-    <changeSet id="create-revinfo-table" author="dburdzy">
-
-        <preConditions onFail="MARK_RAN">
-            <not>
-                <tableExists tableName="revinfo"/>
-            </not>
-        </preConditions>
-
-        <createTable tableName="revinfo">
-            <column name="rev" type="SERIAL" autoIncrement="true">
-                <constraints primaryKey="true" primaryKeyName="revinfo__pk"/>
-            </column>
-            <column name="revtstmp" type="BIGINT"/>
-        </createTable>
-
-        <rollback>
-            <dropTable tableName="revinfo"/>
-        </rollback>
-    </changeSet>
-
-    <changeSet id="create-shedlock-table" author="dburdzy">
-        <preConditions onFail="MARK_RAN">
-            <not>
-                <tableExists tableName="shedlock"/>
-            </not>
-        </preConditions>
-
-        <createTable tableName="shedlock">
-            <column name="name" type="VARCHAR(64)">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="shedlock__pk"/>
-            </column>
-
-            <column name="lock_until" type="TIMESTAMP WITHOUT TIME ZONE">
-                <constraints nullable="true"/>
-            </column>
-
-            <column name="locked_at" type="TIMESTAMP WITHOUT TIME ZONE">
-                <constraints nullable="true"/>
-            </column>
-
-            <column name="locked_by" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-
-        <rollback>
-            <dropTable tableName="shedlock"/>
-        </rollback>
-    </changeSet>
-
     <changeSet id="create-movie-table" author="dburdzy">
         <preConditions onFail="MARK_RAN">
             <not>

@@ -1,25 +1,19 @@
 # Makefile for easier handling common tasks
 MVN = ./mvnw
 
-
-
 lint:
 	$(MVN) antrun:run@ktlint
 
 lint.format:
 	$(MVN) antrun:run@ktlint-format
 
-
-
 dist: install
-
-
-
 
 install:
 	$(MVN) clean install
 
-
+prepare_db:
+	docker-compose up --remove-orphans
 
 start:
 	$(MVN) spring-boot:run
@@ -30,12 +24,8 @@ start.local:
 test:
 	$(MVN) test
 
-
-
 clean:
 	$(MVN) clean
-
-
 
 generate-changelog:
 	PWD=pwd docker run \

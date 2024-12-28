@@ -1,66 +1,47 @@
+# cinema-backend
+
+Backend project to support a small cinema, which only plays movies from the Fast & Furious franchise.
+
 ## Local configuration
 
 ### Configuration file
 
-#### Mandatory
-
-Create a copy of [application-local.template.yml](./src/main/resources/application-local.yml)
-in `/resources` and rename it to
+Create a copy of [application-local.template.yml](./src/main/resources/application-local.template.yml) and rename it to
 `application-local.yml`. This configuration file is loaded while bootstrapping and contains required liquibase config.
 
-> :warning: [**IMPORTANT!**] In order to use it locally you need to provide AWS Cognito variables (`cognito.userPoolId` and `cognito.clientId`).
-> Ask other team members (preferably j.gruda@dental21.de) or check Vault `/backend-services/medlog`
-
-#### Optional
-
-Additionally, you can create a copy
-of [application-local.template.yml](./src/main/resources/application-local.yml) and move it
-to `~/.patient21/{application-name}.yml`.
-This information will persist, even if you delete the project.
-See [PropertyConfig](./src/main/kotlin/de/dental21/_BACKEND_TEMPLATE_/config/PropertyConfig.kt) for details.
-
-### Database
-
-Set up your PostgreSQL database with `docker-compose up`.
-You can manually load a data dump from Staging or sync you data from Staging.
-Definitely check out the sync as it will be useful in most cases.
-
-#### Technical Info
-
-* The project is set up to use the basic Spring MVC and corresponding security with AWS Cognito.
-* The project uses `liquibase` for database schema management
+In the `application-local.yml` file, you need to set the OMDb API key:
+```yaml
+client:
+  omdb:
+    apiKey: "xxx"
+```
 
 ### Prerequisites
 
-What things you need to run the project locally and how to install them
+To run this project, you need to have the following installed:
+* [Docker](https://docs.docker.com/get-docker/)
+* [Java 21](https://www.oracle.com/java/technologies/javase/jdk21-archive-downloads.html)
 
-* [Java 17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
-* [Maven 3.6.x](http://maven.apache.org/download.cgi)
+### Running tests
 
-* Add Gitlab package registry to maven remote.
+To run the tests, execute the following command:
 
-Add the following section in `settings.xml` which should be under `~/.m2/`.
-
-```xml
-
-<settings>
-  <servers>
-    <server>
-      <id>gitlab-maven</id>
-      <configuration>
-        <httpHeaders>
-          <property>
-            <name>Private-Token</name>
-            <value>REPLACE_WITH_YOUR_PERSONAL_ACCESS_TOKEN</value>
-          </property>
-        </httpHeaders>
-      </configuration>
-    </server>
-  </servers>
-</settings>
+```shell
+make test
 ```
 
-Replace the access token with one generated from https://gitlab.com/profile/personal_access_tokens with the following
-roles `api, read_user, read_api, read_repository, read_registry, write_registry`.
-More information can be
-found [here](https://docs.gitlab.com/ee/user/packages/maven_repository/#adding-the-gitlab-package-registry-as-a-maven-remote).
+### Database
+
+Set up your PostgreSQL database with `make prepare_db`. You need to have docker app running.
+
+### Running the project
+
+To run the project, execute the following command:
+
+```shell
+make start.local
+```
+
+### Calling the API
+
+In [http](./http) directory you can find files with examples of API calls.
